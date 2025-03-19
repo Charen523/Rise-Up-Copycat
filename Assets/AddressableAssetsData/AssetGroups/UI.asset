@@ -14,7 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: UI
   m_GUID: 6f64610725cf9df4da0c2a69744a3917
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 12060e145b3cbe24cb043646892e42ff
+    m_Address: Assets/AddressableDatas/UI/addressableMap.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AddressableMap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ca46eda5ac41e94f93c3376658d3cc0
+    m_Address: Assets/AddressableDatas/UI
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8a8d4fc2f35931a4ba3eda21b6171695, type: 2}
   m_SchemaSet:
