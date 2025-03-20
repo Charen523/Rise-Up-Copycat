@@ -20,9 +20,6 @@ public class UIBase : MonoBehaviour
         gameObject.SetActive(isActive);
     }
 
-    public virtual void HideDirect() { }
-
     public virtual void Opened(object[] param) { }
-
     public virtual void Closed(object[] param) { }
 }
