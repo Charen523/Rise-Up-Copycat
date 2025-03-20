@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public bool isInit = false;
-    public static bool isGameStart = false;
+    public bool isInit = false; //앱 초기화
+    public static bool isGameStart = false; //게임 시작
 
     protected override void Awake()
     {
