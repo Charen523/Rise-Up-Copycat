@@ -1,25 +1,26 @@
-using System;
 using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T instance;
-    [Tooltip("¾À ÀÌµ¿ ½Ã : true ºñÆÄ±«/ false ÆÄ±«")]
-    [SerializeField] protected bool isDontDestroyOnLoad = true;
-    protected static bool isUILoading = false;
+    private static readonly object lockObj = new();
+
+    [Tooltip("SceneÀÌµ¿ true ÆÄ±«/ false º¸È£")]
+    [SerializeField] protected bool isDestroyOnLoad = false;
 
     public static T Instance
     {
         get
         {
-            if (!isUILoading)
+            if (instance == null)
             {
-                if (instance == null)
+                lock (lockObj)
                 {
                     instance = FindFirstObjectByType<T>();
+
                     if (instance == null)
                     {
-                        GameObject go = new GameObject(typeof(T).Name);
+                        GameObject go = new(typeof(T).Name);
                         instance = go.AddComponent<T>();
                     }
                 }
@@ -30,23 +31,24 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Awake()
     {
-        if (instance == null)
+        lock (lockObj)
         {
-            instance = this as T;
-            if (isDontDestroyOnLoad)
+            if (instance == null)
             {
-                DontDestroyOnLoad(this.gameObject);
+                instance = this as T;
+
+                if (!isDestroyOnLoad)
+                    DontDestroyOnLoad(gameObject);
             }
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
+            else if (instance != this) Destroy(gameObject);
         }
     }
 
     private void OnDestroy()
     {
-        if (instance != null)
-            Destroy(gameObject);
+        if (instance == this)
+        {
+            instance = null;
+        }
     }
 }
