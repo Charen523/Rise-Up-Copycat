@@ -45,5 +45,7 @@ public class AddressableMap
     public eAssetType assetType;
     public eAddressableType addressableType;
     public string path;
+
+    /// <summary> key값은 path 기반 </summary>
     public string key;
 }
