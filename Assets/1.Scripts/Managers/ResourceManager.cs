@@ -9,7 +9,7 @@ public class ResourceManager : Singleton<ResourceManager>
     //에셋의 Mapping 정보 : [ type / path-key / file info ]
     private readonly Dictionary<eAddressableType, Dictionary<string, AddressableMap>> addressableMaps = new();
 
-    #region Init Addressable Assets
+    #region Unity Life Cycles
     //Initialize the Addressable assets 
     public async Task Init()
     {
@@ -20,54 +20,9 @@ public class ResourceManager : Singleton<ResourceManager>
         //Check Update & Download Server Assets.
         //await DownloadAssetBundles();
     }
-
-    private async Task InitAddressableMap()
-    {
-        var handle = Addressables.LoadAssetsAsync<TextAsset>("AddressableMap", (text) =>
-        {
-            AddressableMapList mapList = JsonUtility.FromJson<AddressableMapList>(text.text);
-            eAddressableType type = eAddressableType.Data;
-            Dictionary<string, AddressableMap> mapDic = new();
-
-            foreach (AddressableMap data in mapList.list)
-            {
-                type = data.addressableType;
-                if (!mapDic.ContainsKey(data.key))
-                    mapDic.Add(data.key, data);
-            }
-            if (!addressableMaps.ContainsKey(type)) addressableMaps.Add(type, mapDic);
-
-        });
-        await handle.Task;
-
-        if (handle.Status != AsyncOperationStatus.Succeeded)
-        {
-            ICLogger.LogError("Failed to load Addressable Map.");
-            return;
-        }
-    }
     #endregion
 
-    #region Ingame Asset Loading
-    public string GetAssetPath(string key, eAddressableType addressableType)
-    {
-        var map = addressableMaps[addressableType][key.ToLower()];
-        return map.path;
-    }
-
-    public List<string> GetAssetPaths(string key, eAddressableType group, eAssetType assetType)
-    {
-        var keys = new List<string>(addressableMaps[group].Keys);
-        keys.RemoveAll(obj => !obj.Contains(key));
-        List<string> pathList = new List<string>();
-        keys.ForEach(obj =>
-        {
-            if (addressableMaps[group][obj].assetType == assetType)
-                pathList.Add(addressableMaps[group][obj].path);
-        });
-        return pathList;
-    }
-
+    #region Main Methods
     /// <summary>
     /// 파일을 <typeparamref name="T"/>로 호출
     /// </summary>
@@ -99,6 +54,53 @@ public class ResourceManager : Singleton<ResourceManager>
             objList.Add(await Addressables.LoadAssetAsync<T>(path).Task);
         }
         return objList;
+    }
+    #endregion
+
+    #region Sub Methods
+    private async Task InitAddressableMap()
+    {
+        var handle = Addressables.LoadAssetsAsync<TextAsset>("AddressableMap", (text) =>
+        {
+            AddressableMapList mapList = JsonUtility.FromJson<AddressableMapList>(text.text);
+            eAddressableType type = eAddressableType.Data;
+            Dictionary<string, AddressableMap> mapDic = new();
+
+            foreach (AddressableMap data in mapList.list)
+            {
+                type = data.addressableType;
+                if (!mapDic.ContainsKey(data.key))
+                    mapDic.Add(data.key, data);
+            }
+            if (!addressableMaps.ContainsKey(type)) addressableMaps.Add(type, mapDic);
+
+        });
+        await handle.Task;
+
+        if (handle.Status != AsyncOperationStatus.Succeeded)
+        {
+            ICLogger.LogError("Failed to load Addressable Map.");
+            return;
+        }
+    }
+
+    public string GetAssetPath(string key, eAddressableType addressableType)
+    {
+        var map = addressableMaps[addressableType][key.ToLower()];
+        return map.path;
+    }
+
+    public List<string> GetAssetPaths(string key, eAddressableType group, eAssetType assetType)
+    {
+        var keys = new List<string>(addressableMaps[group].Keys);
+        keys.RemoveAll(obj => !obj.Contains(key));
+        List<string> pathList = new List<string>();
+        keys.ForEach(obj =>
+        {
+            if (addressableMaps[group][obj].assetType == assetType)
+                pathList.Add(addressableMaps[group][obj].path);
+        });
+        return pathList;
     }
 
     private async Task<T> LoadAssetAsync<T>(string path)
