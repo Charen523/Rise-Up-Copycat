@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum eUIPosition
 {
@@ -12,6 +13,7 @@ public class UIManager : Singleton<UIManager>
 {
     private List<Transform> parents;
     [SerializeField] private List<UIBase> uiList = new();
+    [SerializeField] private Image fadeBG;
 
 #pragma warning disable CS1998
     public async Task Init()
