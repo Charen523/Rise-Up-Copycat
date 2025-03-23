@@ -6,7 +6,6 @@ public class MapManager : Singleton<MapManager>
 {
     [SerializeField] private List<GameObject> mapPrefabs;
     [SerializeField] private Transform mapParent;
-    [SerializeField] private GameObject curMap;
 
     #region Unity Life Cycles
     public async Task Init()
@@ -16,6 +15,14 @@ public class MapManager : Singleton<MapManager>
     #endregion
 
     #region Main Methods
+    public void ResetPattern()
+    {
+        foreach (Transform t in mapParent)
+        {
+            Destroy(t.gameObject);
+        }
+    }
+
     public void ShowRandomMap()
     {
         int idx = Random.Range(0, mapPrefabs.Count);
