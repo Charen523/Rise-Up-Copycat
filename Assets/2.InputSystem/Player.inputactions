@@ -1,0 +1,66 @@
+{
+    "name": "Player",
+    "maps": [
+        {
+            "name": "player",
+            "id": "52ee48a3-a9a4-4f05-bf4d-e8ef8b656bd6",
+            "actions": [
+                {
+                    "name": "move",
+                    "type": "Value",
+                    "id": "bf7106a3-e783-4024-97ce-97dc0e5e714e",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "click",
+                    "type": "Button",
+                    "id": "5634e093-c1c2-4d5c-bb06-12782e0ea5ac",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ef0fe63b-a0fb-4223-b9e7-f327e98c0d14",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7c35c4f7-2b37-4aba-bbff-0cea3c741ba9",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "mouse_touch",
+            "bindingGroup": "mouse_touch",
+            "devices": [
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
