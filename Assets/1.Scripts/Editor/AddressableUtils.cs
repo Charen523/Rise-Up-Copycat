@@ -50,7 +50,7 @@ internal class AddressableUtils : Editor
         string versionedPath = Application.dataPath + $"/BuildData/lastBuildData_{Application.version}.txt";
 
         List<string> uploadList = result.FileRegistry.GetFilePaths()
-            .Where(obj => obj.Contains("ServerData")) //TODO: ¾÷·Îµå ÆÄÀÏ ¼±º° ½Ã Âü°í
+            .Where(obj => obj.Contains("ServerData")) //TODO: ì—…ë¡œë“œ íŒŒì¼ ì„ ë³„ ì‹œ ì°¸ê³ 
             .ToList();
         string list = string.Join("\n", uploadList);
 
@@ -92,7 +92,8 @@ internal class AddressableUtils : Editor
             };
             data.addressableType = type;
             data.path = path;
-            data.key = Path.GetFileNameWithoutExtension(path).ToLower();
+            data.key = path.Replace("Assets/AddressableDatas/", "");
+            data.key = data.key.Replace(Path.GetFileName(path), Path.GetFileNameWithoutExtension(path)).ToLower();
 
             /*Add to AddressableMapList*/
             mapList.Add(data);

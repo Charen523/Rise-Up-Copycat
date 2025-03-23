@@ -91,6 +91,7 @@ public class ResourceManager : Singleton<ResourceManager>
 
     public List<string> GetAssetPaths(string key, eAddressableType group, eAssetType assetType)
     {
+        key = key.ToLower();
         var keys = new List<string>(addressableMaps[group].Keys);
         keys.RemoveAll(obj => !obj.Contains(key));
         List<string> pathList = new List<string>();

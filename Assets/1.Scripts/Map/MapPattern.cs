@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class MapPattern : MonoBehaviour
@@ -11,8 +10,6 @@ public class MapPattern : MonoBehaviour
     public event Action<Collision2D> OnChildCollisionEvent;
 
     [SerializeField] private float moveSpeed = 1.5f;
-
-    private readonly string floorTag = "Floor";
 
     #region Unity Life Cycles
     private void Awake()

@@ -35,7 +35,7 @@ public class GameManager : Singleton<GameManager>
 #endif
 
         await InitManagers();
-        //Time.timeScale = 0;
+        Time.timeScale = 0;
 
         isInit = true;
     }

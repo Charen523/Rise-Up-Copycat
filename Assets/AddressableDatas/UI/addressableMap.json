@@ -1,1 +1,1 @@
-{"list":[{"assetType":2,"addressableType":4,"path":"Assets/AddressableDatas/UI/addressableMap.json","key":"addressablemap"},{"assetType":3,"addressableType":4,"path":"Assets/AddressableDatas/UI/UIResult.prefab","key":"uiresult"}]}
+{"list":[{"assetType":2,"addressableType":4,"path":"Assets/AddressableDatas/UI/addressableMap.json","key":"ui/addressablemap"},{"assetType":3,"addressableType":4,"path":"Assets/AddressableDatas/UI/UIResult.prefab","key":"ui/uiresult"}]}
