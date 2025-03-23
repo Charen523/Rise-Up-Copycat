@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class MapPattern : MonoBehaviour
@@ -10,9 +9,7 @@ public class MapPattern : MonoBehaviour
 
     public event Action<Collision2D> OnChildCollisionEvent;
 
-    [SerializeField] private float moveSpeed = 1f;
-
-    private readonly string floorTag = "Floor";
+    [SerializeField] private float moveSpeed = 1.5f;
 
     #region Unity Life Cycles
     private void Awake()
@@ -23,18 +20,18 @@ public class MapPattern : MonoBehaviour
     private void FixedUpdate()
     {
         transform.position += Vector3.down * moveSpeed * Time.fixedDeltaTime;
+
+        if (transform.position.y == -15)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnChildCollisionEnter(Collision2D collision)
     {
-        Debug.Log(collision.gameObject.name);
         if (colDynamicObjs.Length != 0)
         {
             MakeDynamic();
-        }
-        else if (collision.gameObject.CompareTag(floorTag))
-        {
-            Destroy(gameObject);
         }
     }
     #endregion
@@ -52,6 +49,9 @@ public class MapPattern : MonoBehaviour
     {
         foreach (ObjDynamicOnCollision obj in colDynamicObjs)
         {
+            if (obj == null || obj.rb == null)
+                continue;
+
             obj.rb.bodyType = RigidbodyType2D.Dynamic;
         }
     }

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -19,9 +20,10 @@ public class UIManager : Singleton<UIManager>
     public async Task Init()
 #pragma warning restore CS1998
     {
-
+        
     }
 
+    #region static methods
     public static void SetParents(List<Transform> parents)
     {
         Instance.parents = parents;
@@ -94,4 +96,22 @@ public class UIManager : Singleton<UIManager>
     {
         return Instance.uiList.Exists(obj => obj.name == typeof(T).ToString());
     }
+    #endregion
+
+    #region fades
+    public void ToBlack()
+    {
+        fadeBG.DOFade(1f, 1f).SetUpdate(true);
+    }
+
+    public void ToHalfTransparent()
+    {
+        fadeBG.DOFade(200 / 255f, 1f).SetUpdate(true);
+    }
+
+    public void ToTransparent()
+    {
+        fadeBG.DOFade(0f, 1f).SetUpdate(true);
+    }
+    #endregion
 }

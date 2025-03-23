@@ -11,12 +11,15 @@ public class MainCanvas : MonoBehaviour
 
     private IEnumerator Start()
     {
-        yield return SceneManager.LoadSceneAsync("DontDestroy", LoadSceneMode.Additive);
         UIManager.SetParents(parents);
+
         yield return GameManager.Instance.InitApp();
+        yield return new WaitUntil(() => GameManager.Instance.isInit);
+
+        UIManager.Instance.ToHalfTransparent();
 
         yield return new WaitUntil(() => GameManager.isGameStart);
 
-        //TODO : 게임시작 신호보내기.
+        UIManager.Hide<UIStart>();
     }
 }

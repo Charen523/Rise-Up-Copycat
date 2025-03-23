@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5397482999649478228}
+  - component: {fileID: -1588698870150080025}
   m_Layer: 5
   m_Name: UIResult
   m_TagString: Untagged
@@ -38,6 +39,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &-1588698870150080025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 239240876095092436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 889f5793810c2c945a8ed1c3862be33e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActiveInCreated: 1
+  isDestroyAtClosed: 0
+  uiPosition: 0
+  slotScorePrefab: {fileID: 6870128676329274232, guid: 00ce63a51af3c894497fa3e318e94e49, type: 3}
+  slotParent: {fileID: 4995121670412179626}
 --- !u!1 &2890276715181715335
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,6 +478,7 @@ GameObject:
   - component: {fileID: 2468120806932084183}
   - component: {fileID: 1405199873092941523}
   - component: {fileID: 5508038398710476457}
+  - component: {fileID: 4754771500211194756}
   m_Layer: 5
   m_Name: RetryBtn
   m_TagString: Untagged
@@ -567,4 +586,28 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1405199873092941523}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4754771500211194756}
+        m_TargetAssemblyTypeName: PlayBtn, Assembly-CSharp
+        m_MethodName: OnBtnClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4754771500211194756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8925301996080537022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b561a411ae8020244bcb23c2f80fa690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
