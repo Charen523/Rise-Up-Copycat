@@ -7,7 +7,6 @@
 </td>
 <td style="padding-left: 20px; vertical-align: top;">
 
-<b>IN-GAME SCREENSHOT</b>  
 <b>풍선을 지켜 오래 살아남으세요!</b>  
 손가락(또는 마우스)과 함께 움직이는 보호막을 조작해 장애물을 막아보세요.  
 풍선이 장애물에 닿는 순간 게임은 종료됩니다.
