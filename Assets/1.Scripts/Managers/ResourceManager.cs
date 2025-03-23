@@ -9,7 +9,7 @@ public class ResourceManager : Singleton<ResourceManager>
     //에셋의 Mapping 정보 : [ type / path-key / file info ]
     private readonly Dictionary<eAddressableType, Dictionary<string, AddressableMap>> addressableMaps = new();
 
-    #region Init Addressable Assets
+    #region Unity Life Cycles
     //Initialize the Addressable assets 
     public async Task Init()
     {
@@ -20,7 +20,43 @@ public class ResourceManager : Singleton<ResourceManager>
         //Check Update & Download Server Assets.
         //await DownloadAssetBundles();
     }
+    #endregion
 
+    #region Main Methods
+    /// <summary>
+    /// 파일을 <typeparamref name="T"/>로 호출
+    /// </summary>
+    /// <typeparam name="T">불러올 형식</typeparam>
+    /// <param name="key">파일 이름</param>
+    /// <param name="addressableType">addressable group</param>
+    /// <returns><typeparamref name="T"/></returns>
+    public async Task<T> LoadAsset<T>(string key, eAddressableType addressableType)
+    {
+        var path = GetAssetPath(key, addressableType);
+        return await LoadAssetAsync<T>(path);
+    }
+
+    /// <summary>
+    /// 주소에 key를 포함하는 파일들을 List<typeparamref name="T"/>로 호출
+    /// </summary>
+    /// <typeparam name="T">불러올 형식</typeparam>
+    /// <param name="key">폴더/파일 이름</param>
+    /// <param name="addressableType">addressable group</param>
+    /// <param name="assetType">확장자 종류</param>
+    /// <returns>List<typeparamref name="T"/></returns>
+    public async Task<List<T>> LoadAssetList<T>(string key, eAddressableType addressableType, eAssetType assetType)
+    {
+        var paths = GetAssetPaths(key, addressableType, assetType);
+        List<T> objList = new();
+        foreach (var path in paths)
+        {
+            objList.Add(await Addressables.LoadAssetAsync<T>(path).Task);
+        }
+        return objList;
+    }
+    #endregion
+
+    #region Sub Methods
     private async Task InitAddressableMap()
     {
         var handle = Addressables.LoadAssetsAsync<TextAsset>("AddressableMap", (text) =>
@@ -46,9 +82,7 @@ public class ResourceManager : Singleton<ResourceManager>
             return;
         }
     }
-    #endregion
 
-    #region Ingame Asset Loading
     public string GetAssetPath(string key, eAddressableType addressableType)
     {
         var map = addressableMaps[addressableType][key.ToLower()];
@@ -66,39 +100,6 @@ public class ResourceManager : Singleton<ResourceManager>
                 pathList.Add(addressableMaps[group][obj].path);
         });
         return pathList;
-    }
-
-    /// <summary>
-    /// 파일을 <typeparamref name="T"/>로 호출
-    /// </summary>
-    /// <typeparam name="T">불러올 형식</typeparam>
-    /// <param name="key">파일 이름</param>
-    /// <param name="addressableType">addressable group</param>
-    /// <returns><typeparamref name="T"/></returns>
-    public async Task<T> LoadAsset<T>(string key, eAddressableType addressableType)
-    {
-        var path = GetAssetPath(key, addressableType);
-        return await LoadAssetAsync<T>(path);
-    }
-
-    /// <summary>
-    /// 주소에 key를 포함하는 파일들을 List<typeparamref name="T"/>로 호출
-    /// </summary>
-    /// <typeparam name="T">불러올 형식</typeparam>
-    /// <param name="key">폴더/파일 이름</param>
-    /// <param name="assetType">확장자 종류</param>
-    /// <returns>List<typeparamref name="T"/></returns>
-    public async Task<List<T>> LoadAssetList<T>(string key, eAssetType assetType)
-    {
-        eAddressableType addressableType = (assetType == eAssetType.json) ? eAddressableType.Data : eAddressableType.Asset;
-
-        var paths = GetAssetPaths(key, addressableType, assetType);
-        List<T> objList = new();
-        foreach (var path in paths)
-        {
-            objList.Add(await Addressables.LoadAssetAsync<T>(path).Task);
-        }
-        return objList;
     }
 
     private async Task<T> LoadAssetAsync<T>(string path)
