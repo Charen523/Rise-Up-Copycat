@@ -27,6 +27,7 @@ public class MapPattern : MonoBehaviour
 
     private void OnChildCollisionEnter(Collision2D collision)
     {
+        Debug.Log(collision.gameObject.name);
         if (colDynamicObjs.Length != 0)
         {
             MakeDynamic();
