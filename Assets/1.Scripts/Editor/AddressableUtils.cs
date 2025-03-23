@@ -92,8 +92,12 @@ internal class AddressableUtils : Editor
             };
             data.addressableType = type;
             data.path = path;
-            data.key = path.Replace("Assets/AddressableDatas/", "");
-            data.key = data.key.Replace(Path.GetFileName(path), Path.GetFileNameWithoutExtension(path)).ToLower();
+            data.key = Path.Combine(
+                Path.GetDirectoryName(path
+                .Replace("Assets/AddressableDatas/", "")
+                .Replace(type.ToString() + "/", "")) 
+                ?? "", Path.GetFileNameWithoutExtension(path))
+                .ToLower();
 
             /*Add to AddressableMapList*/
             mapList.Add(data);
