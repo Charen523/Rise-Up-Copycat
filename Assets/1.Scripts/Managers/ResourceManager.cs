@@ -41,12 +41,11 @@ public class ResourceManager : Singleton<ResourceManager>
     /// </summary>
     /// <typeparam name="T">불러올 형식</typeparam>
     /// <param name="key">폴더/파일 이름</param>
+    /// <param name="addressableType">addressable group</param>
     /// <param name="assetType">확장자 종류</param>
     /// <returns>List<typeparamref name="T"/></returns>
-    public async Task<List<T>> LoadAssetList<T>(string key, eAssetType assetType)
+    public async Task<List<T>> LoadAssetList<T>(string key, eAddressableType addressableType, eAssetType assetType)
     {
-        eAddressableType addressableType = (assetType == eAssetType.json) ? eAddressableType.Data : eAddressableType.Asset;
-
         var paths = GetAssetPaths(key, addressableType, assetType);
         List<T> objList = new();
         foreach (var path in paths)
