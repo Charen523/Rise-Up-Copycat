@@ -21,16 +21,22 @@ public class ObjDynamicOnCollision : MonoBehaviour
         {
             rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
         }
+
+        if (transform.position.y == -15)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        rb.bodyType = RigidbodyType2D.Dynamic;
-        pattern.InvokeChildCollision(collision);
-
         if (collision.gameObject.CompareTag(floorTag))
         {
             Destroy(gameObject);
+            return;
         }
+
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        pattern.InvokeChildCollision(collision);
     }
 }
